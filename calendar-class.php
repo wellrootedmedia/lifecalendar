@@ -14,17 +14,17 @@ class Calendar {
         $this->glob = $wpdb;
     }
 
-    public function __get($proertyName) {
-        if(array_key_exists($proertyName, $this->_extraData)) {
-            return $this->_extraData[$proertyName];
-        } else {
-            return null;
-        }
-    }
-
-    public function __set($propertyName, $propertyValue) {
-        $this->_extraData[$propertyName] = $propertyValue;
-    }
+//    public function __get($proertyName) {
+//        if(array_key_exists($proertyName, $this->_extraData)) {
+//            return $this->_extraData[$proertyName];
+//        } else {
+//            return null;
+//        }
+//    }
+//
+//    public function __set($propertyName, $propertyValue) {
+//        $this->_extraData[$propertyName] = $propertyValue;
+//    }
 
     public function showWpdb() {
         return $this->glob;
@@ -52,12 +52,22 @@ class Calendar {
         return $this->getData();
     }
 
+    public function day() {
+        return (isset($_GET['myDay']) != ""
+            ? date('d', strtotime($_GET['myDay']))
+            : date('d', $this->date));
+    }
+
     public function month() {
-        return (isset($_GET['month']) == "" ? date('m', $this->date) : date('m', strtotime($_GET['month'])));
+        return (isset($_GET['myMonth']) != ""
+            ? date('m', strtotime($_GET['myMonth']))
+            : date('m', $this->date));
     }
 
     public function year() {
-        return date('Y', $this->date);
+        return (isset($_GET['myYear']) != ""
+            ? date('Y', strtotime($_GET['myYear']."-".$this->month()."-".$this->day()))
+            : date('Y', $this->date));
     }
 
     public function dayOfWeek() {
@@ -74,6 +84,7 @@ function displayCalendarClass () {
     $cal = new Calendar();
 
     $cal->date = time();
+    $day = $cal->day();
     $month = $cal->month();
     $year = $cal->year();
     $cal->firstDay = mktime(0, 0, 0, $month, 1, $year);
@@ -83,6 +94,7 @@ function displayCalendarClass () {
     $dayCount = $cal->dayCount = 1;
     $dayNum = $cal->dayNum = 1;
     $posts = $cal->getPosts();
+    $prevMonth = date('F', strtotime(date('Y-m') . " -1 month"));
 
     switch ($dayOfWeek) {
         case "Sun":
@@ -121,7 +133,6 @@ function displayCalendarClass () {
     echo "<tr><td width=42>S</td><td width=42>M</td><td width=42>T</td><td width=42>W</td><td width=42>T</td><td width=42>F</td><td width=42>S</td></tr>";
     echo "<tr>";
 
-
     while ($cal->blank > 0) {
         echo "<td></td>";
         $cal->blank = $cal->blank - 1;
@@ -145,7 +156,7 @@ function displayCalendarClass () {
             $postMonth = date('m', strtotime($result['postDate']));
 
             if($dayNum == $postDay && $month == $postMonth) {
-                echo '<td class="cal-day day-' . $dayNum . '"> ' . $dayNum  . ' <br/>' . $result['postTitle'] . '</td>';
+                echo '<td class="cal-day day-' . $dayNum . '"> ' . $dayNum  . ' <p style="color:red;">' . $result['postTitle'] . '</p></td>';
 
                 $dayNum++;
                 $dayCount++;
@@ -173,5 +184,6 @@ function displayCalendarClass () {
 
     echo "</tr></table>";
 
-}
+    echo '<a href="'.add_query_arg( 'myMonth', strtolower($prevMonth), get_permalink(5276) ).'">'.$prevMonth.'</a>';
 
+}
