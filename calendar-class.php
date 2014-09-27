@@ -14,17 +14,17 @@ class Calendar {
         $this->glob = $wpdb;
     }
 
-//    public function __get($proertyName) {
-//        if(array_key_exists($proertyName, $this->_extraData)) {
-//            return $this->_extraData[$proertyName];
-//        } else {
-//            return null;
-//        }
-//    }
-//
-//    public function __set($propertyName, $propertyValue) {
-//        $this->_extraData[$propertyName] = $propertyValue;
-//    }
+    public function __get($proertyName) {
+        if(array_key_exists($proertyName, $this->_extraData)) {
+            return $this->_extraData[$proertyName];
+        } else {
+            return null;
+        }
+    }
+
+    public function __set($propertyName, $propertyValue) {
+        $this->_extraData[$propertyName] = $propertyValue;
+    }
 
     public function showWpdb() {
         return $this->glob;
@@ -150,7 +150,7 @@ function displayCalendarClass () {
     }
 
     while ($dayNum <= $daysInMonth) {
-        $today = ($dayNum == $day ? "today" : "");
+        $today = ($dayNum == $day && $year == date('Y') && $month == date('m') ? "today" : "");
         foreach($results as $result) {
             $postDay = date('j', strtotime($result['postDate']));
             $postMonth = date('m', strtotime($result['postDate']));
