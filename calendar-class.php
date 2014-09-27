@@ -192,7 +192,6 @@ function displayCalendarClass () {
 ?>
     <div id="dialog-message">we're here</div>
 <script type="text/javascript">
-    //jQuery.noConflict();
     $(function () {
         $('#dialog-message').hide();
 
