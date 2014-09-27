@@ -27,6 +27,16 @@ function create_post_type() {
     );
 }
 
+add_action('admin_menu', 'gmp_create_menu');
+function gmp_create_menu() {
+    add_submenu_page( 'edit.php?post_type=life_calendar_events', 'settings', 'Settings', 'manage_options', 'life-calendar-settings', 'life_calendar_settings' );
+}
+function life_calendar_settings() {
+    echo '<div class="wrap"><div id="icon-tools" class="icon32"></div>';
+    echo '<h2>Life Calendar Settings Page</h2>';
+    echo '</div>';
+}
+
 add_action( 'wp_enqueue_scripts', 'pluginScripts' );
 function pluginScripts() {
     wp_enqueue_style( 'jquery-ui-smoothness', "//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" );
