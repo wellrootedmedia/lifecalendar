@@ -10,7 +10,7 @@
  */
 
 include( plugin_dir_path( __FILE__ ) . 'calendar-class.php');
-//include( plugin_dir_path( __FILE__ ) . 'timeline-class.php');
+include( plugin_dir_path( __FILE__ ) . 'timeline-class.php');
 
 add_action( 'init', 'create_post_type' );
 function create_post_type() {
@@ -34,6 +34,9 @@ function pluginScripts() {
     wp_enqueue_style( 'custom-plugin-style', plugins_url( 'custom.css' , __FILE__ ) );
     wp_enqueue_script( 'my-jquury-script', "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" );
     wp_enqueue_script('my-jquery-ui-script', 'http://code.jquery.com/ui/1.11.1/jquery-ui.js');
+
+    wp_enqueue_style( 'timeline-style', plugins_url( 'css/style.css' , __FILE__ ) );
+    wp_enqueue_script('timeline-script', plugins_url( 'js/script.js' , __FILE__ ));
 }
 
 add_shortcode( 'life_calendar', 'life_calendar_func' );
@@ -44,6 +47,9 @@ function life_calendar_func( $atts ) {
 //    ), $atts));
 
     displayCalendarClass();
+    $lceOption = get_option('timeline_option');
+    if($lceOption == "on")
+        displayTimelineClass();
 }
 
 
