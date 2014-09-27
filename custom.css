@@ -6,10 +6,14 @@ td {
     text-align: center;
 }
 
-td.cal-day:hover {
+td.cal-day.hover {
     cursor: pointer;
+}
+td.cal-day.hover:hover{
     background-color: lightgrey !important;
 }
+
+.today { background-color: lightgreen; }
 
 .dialog-message {
     width: 500px;

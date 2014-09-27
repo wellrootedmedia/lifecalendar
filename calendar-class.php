@@ -150,13 +150,13 @@ function displayCalendarClass () {
     }
 
     while ($dayNum <= $daysInMonth) {
-
+        $today = ($dayNum == $day ? "today" : "");
         foreach($results as $result) {
             $postDay = date('j', strtotime($result['postDate']));
             $postMonth = date('m', strtotime($result['postDate']));
-
-            if($dayNum == $postDay && $month == $postMonth) {
-                echo '<td class="cal-day day-' . $dayNum . '"> ' . $dayNum  . ' <p style="color:red;">' . $result['postTitle'] . '</p></td>';
+            $postYear = date('Y', strtotime($result['postDate']));
+            if($dayNum == $postDay && $month == $postMonth && $year == $postYear) {
+                echo '<td class="cal-day day-' . $dayNum . ' hover '.$today.'" data-calendar-event="'.$result['postDate'].'"> ' . $dayNum  . ' <p style="color:red;">' . $result['postTitle'] . '</p></td>';
 
                 $dayNum++;
                 $dayCount++;
@@ -167,7 +167,7 @@ function displayCalendarClass () {
             }
         }
 
-        echo '<td class="cal-day day-' . $dayNum . '"> ' . $dayNum . '</td>';
+        echo '<td class="cal-day day-' . $dayNum . ' '.$today.'"> ' . $dayNum . '</td>';
 
         $dayNum++;
         $dayCount++;
@@ -184,6 +184,51 @@ function displayCalendarClass () {
 
     echo "</tr></table>";
 
-    echo '<a href="'.add_query_arg( 'myMonth', strtolower($prevMonth), get_permalink(5276) ).'">'.$prevMonth.'</a>';
+    echo '<a href="'.get_permalink().'">Today</a>';
 
+    echo '<br/>';
+
+    echo '<a href="'.add_query_arg( 'myMonth', strtolower($prevMonth), get_permalink(5276) ).'">'.$prevMonth.'</a>';
+?>
+    <div id="dialog-message">we're here</div>
+<script type="text/javascript">
+    //jQuery.noConflict();
+    $(function () {
+        $('#dialog-message').hide();
+
+            $('body').find('td.cal-day').click(function () {
+                if($(this).data('calendarEvent') != undefined) {
+                    $("#dialog-message").dialog({
+                        modal: true,
+                        buttons: {
+                            Ok: function () {
+                                $(this).dialog("close");
+                            }
+                        },
+                        width: 500,
+                        height: 400
+                    });
+
+                    $(document).scroll(function (e) {
+
+                        if ($(".ui-widget-overlay")) {
+                            $(".ui-widget-overlay").css({
+                                position: 'fixed',
+                                top: '0'
+                            });
+
+                            pos = $(".ui-dialog").position();
+
+                            $(".ui-dialog").css({
+                                position: 'fixed',
+                                top: pos.y
+                            });
+                        }
+                    });
+                }
+            });
+
+    });
+</script>
+<?php
 }
