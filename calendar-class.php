@@ -212,13 +212,14 @@ function displayCalendarClass () {
 ?>
     <div class="row">
         <div class="center-block" style="max-width: 377px; margin: 0 auto;">
+            <?php $ifYearExists = (isset($_GET['myYear']) ? "&myYear=" . $_GET['myYear'] : ""); ?>
             <a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getYearMonth); ?>&myYear=<?php echo $getPrevYear; ?>">&lt;&lt;</a>
 
-            <a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getPrevMonth); ?>">&lt;</a>
+            <a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getPrevMonth) . $ifYearExists; ?>">&lt;</a>
             &nbsp;
             <a href="<?php echo get_permalink(); ?>">Today</a>
             &nbsp;
-            <a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getNextMonth); ?>">&gt;</a>
+            <a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getNextMonth) . $ifYearExists; ?>">&gt;</a>
 
             <a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getYearMonth); ?>&myYear=<?php echo $getNextYear; ?>">&gt;&gt;</a>
         </div>
