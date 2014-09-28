@@ -8,7 +8,7 @@
  * Author URI: http://shawnnolan.com
  * License: GPL2
  */
-
+include( plugin_dir_path( __FILE__ ) . 'connect-class.php');
 include( plugin_dir_path( __FILE__ ) . 'calendar-class.php');
 include( plugin_dir_path( __FILE__ ) . 'timeline-class.php');
 
@@ -37,6 +37,7 @@ function pluginScripts() {
 
     wp_enqueue_style( 'timeline-style', plugins_url( 'css/style.css' , __FILE__ ) );
     wp_enqueue_script('timeline-script', plugins_url( 'js/script.js' , __FILE__ ));
+    wp_enqueue_script('timeline-ui-script', '//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js');
 }
 
 add_shortcode( 'life_calendar', 'life_calendar_func' );

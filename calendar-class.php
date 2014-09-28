@@ -1,18 +1,10 @@
 <?php
-class Calendar {
+class Calendar extends Connect {
 
     public $firstDay;
     public $date;
     public $blank;
-
-    protected $glob;
-
     private $_extraData = array();
-
-    public function __construct() {
-        global $wpdb;
-        $this->glob = $wpdb;
-    }
 
     public function __get($proertyName) {
         if(array_key_exists($proertyName, $this->_extraData)) {
@@ -24,28 +16,6 @@ class Calendar {
 
     public function __set($propertyName, $propertyValue) {
         $this->_extraData[$propertyName] = $propertyValue;
-    }
-
-    public function showWpdb() {
-        return $this->glob;
-    }
-
-    private function getPrefix() {
-        return $this->glob->prefix;
-    }
-
-    private function getPostPrefix() {
-        return $this->getPrefix() . "posts";
-    }
-
-    private function getData() {
-        $query = "
-            SELECT * FROM ".$this->getPostPrefix()."
-            WHERE post_type = 'life_calendar_events'
-            AND post_status <> 'auto-draft'
-        ";
-
-        return $this->glob->get_results($query, OBJECT);
     }
 
     public function getPosts() {
@@ -93,8 +63,15 @@ function displayCalendarClass () {
     $daysInMonth = cal_days_in_month(0, $month, $year);
     $dayCount = $cal->dayCount = 1;
     $dayNum = $cal->dayNum = 1;
-    $posts = $cal->getPosts();
     $prevMonth = date('F', strtotime(date('Y-m') . " -1 month"));
+
+    $cal->setColumnName("posts");
+    $query = "
+            SELECT * FROM ".$cal->getPostPrefix()."
+            WHERE post_type = 'life_calendar_events'
+            AND post_status <> 'auto-draft'
+        ";
+    $posts = $cal->wpdb()->get_results($query, OBJECT);
 
     switch ($dayOfWeek) {
         case "Sun":

@@ -1,25 +1,37 @@
-<?php function displayTimelineClass() { global $wpdb; ?>
+<?php
+class Timeline extends Connect{
+    public $dates = array();
+    public $colors = array();
+    public $scrollPoints = '';
+}
+
+
+function displayTimelineClass() {
+    $timeLine = new Timeline();
+
+    $timeLine->setColumnName("posts");
+    $query = "
+            SELECT * FROM ".$timeLine->getPostPrefix()."
+            WHERE post_type = 'life_calendar_events'
+            AND post_status <> 'auto-draft'
+            ORDER BY post_date ASC
+        ";
+    $timeLinePosts = $timeLine->wpdb()->get_results($query, OBJECT);
+
+    $dates = $timeLine->dates;
+    $colors = $timeLine->colors = array('green', 'blue', 'chreme');
+    $scrollPoints = $timeLine->scrollPoints;
+    ?>
 <div id="main">
     <h1>Your time line</h1>
 
     <div id="timelineLimiter">
         <div id="timelineScroll">
             <?php
-            $query = "
-                SELECT * FROM ".$wpdb->prefix."posts
-                WHERE post_type = 'life_calendar_events'
-                AND post_status <> 'auto-draft'
-                ORDER BY post_date ASC
-            ";
-            $posts = $wpdb->get_results($query, OBJECT);
-
-            $dates = array();
-            $colors = array('green', 'blue', 'chreme');
-            $scrollPoints = '';
             $i = 0;
 
-            if(!empty($posts)) {
-                foreach($posts as $post ) {
+            if(!empty($timeLinePosts)) {
+                foreach($timeLinePosts as $post ) {
                     $dates[date('Y',strtotime($post->post_date))][] = $post;
                 }
             }
@@ -48,7 +60,7 @@
 
                     <div id="dialog-message">
                         <div id="windowBox">
-                            <a href="#" class="close">CLOSE<img src="../img/icons/69.png" border="0" width="20px;" /></a>
+                            <a href="#" class="close">CLOSE<img src="<?php echo plugins_url('img/icons/69.png'); ?>" border="0" width="20px;" /></a>
                             <div id="titleDiv"><?php echo $event->post_title; ?></div>
                             <?php echo $event->post_content; ?>
                             <div id="date"><?php echo $event->post_date; ?></div>
