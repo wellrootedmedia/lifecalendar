@@ -56,16 +56,16 @@ function displayTimelineClass() {
                             <div class="date"><?php echo date("F j, Y",strtotime($event->post_date)); ?></div>
                             <a href="#" class="close">Close</a>
                         </div>
-                    </li>
 
-                    <div id="dialog-message">
-                        <div id="windowBox">
-                            <a href="#" class="close">CLOSE<img src="<?php echo plugins_url('img/icons/69.png'); ?>" border="0" width="20px;" /></a>
-                            <div id="titleDiv"><?php echo $event->post_title; ?></div>
-                            <?php echo $event->post_content; ?>
-                            <div id="date"><?php echo $event->post_date; ?></div>
+                        <div id="timeline-dialog-message" data-title="<?php echo $event->post_title; ?>">
+                            <div id="windowBox">
+                                <a href="#" class="close">CLOSE<img src="<?php echo plugins_url('img/icons/69.png', __FILE__); ?>" border="0" width="20px;" /></a>
+                                <div id="titleDiv"><?php echo $event->post_title; ?></div>
+                                <?php echo $event->post_content; ?>
+                                <div id="date"><?php echo $event->post_date; ?></div>
+                            </div>
                         </div>
-                    </div>
+                    </li>
                 <?php
                 }
                 echo '</ul></div>';
@@ -96,13 +96,14 @@ function displayTimelineClass() {
 
     <script type="text/javascript">
         $(function () {
-            $('.eventList #dialog-message').each(function(){
+            $('.eventList li #timeline-dialog-message').each(function(){
                 $(this).hide();
             });
 
             $('.eventList li').click(function(e){
-                $("#dialog-message").dialog({
+                $("#timeline-dialog-message").dialog({
                     modal: true,
+                    title: $(this).find('#timeline-dialog-message').data("title"),
                     buttons: {
                         Ok: function () {
                             $(this).dialog("close");

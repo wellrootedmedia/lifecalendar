@@ -121,7 +121,8 @@ function displayCalendarClass () {
         foreach($posts as $post ) {
             array_push($results, array(
                 'postTitle' => $post->post_title,
-                'postDate' => $post->post_date
+                'postDate' => $post->post_date,
+                'postContent' => $post->post_content
             ));
         }
     }
@@ -133,8 +134,13 @@ function displayCalendarClass () {
             $postMonth = date('m', strtotime($result['postDate']));
             $postYear = date('Y', strtotime($result['postDate']));
             if($dayNum == $postDay && $month == $postMonth && $year == $postYear) {
-                echo '<td class="cal-day day-' . $dayNum . ' hover '.$today.'" data-calendar-event="'.$result['postDate'].'"> ' . $dayNum  . ' <p style="color:red;">' . $result['postTitle'] . '</p></td>';
-
+                ?>
+                <td class="cal-day day-<?php echo $dayNum; ?> hover <?php echo $today; ?>" data-calendar-event="<?php echo $result['postDate']; ?>">
+                    <?php echo $dayNum; ?>
+                    <p style="color:red;"><?php echo substr($result['postTitle'],0,10).'...'; ?></p>
+                    <div id="calendar-dialog-message" data-calendar-title="<?php echo $result['postTitle']; ?>"><?php echo $result['postContent']; ?></div>
+                </td>
+                <?php
                 $dayNum++;
                 $dayCount++;
                 if ($dayCount > 7) {
@@ -167,15 +173,16 @@ function displayCalendarClass () {
 
     echo '<a href="'.add_query_arg( 'myMonth', strtolower($prevMonth), get_permalink(5276) ).'">'.$prevMonth.'</a>';
 ?>
-    <div id="dialog-message">we're here</div>
+
 <script type="text/javascript">
     $(function () {
-        $('#dialog-message').hide();
+        $('#calendar-dialog-message').hide();
 
             $('body').find('td.cal-day').click(function () {
                 if($(this).data('calendarEvent') != undefined) {
-                    $("#dialog-message").dialog({
+                    $("#calendar-dialog-message").dialog({
                         modal: true,
+                        title: $(this).find('#calendar-dialog-message').data("calendarTitle"),
                         buttons: {
                             Ok: function () {
                                 $(this).dialog("close");
