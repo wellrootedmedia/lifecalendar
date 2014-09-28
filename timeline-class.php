@@ -35,10 +35,10 @@ function displayTimelineClass() {
                 foreach($array as $event) {
                     ?>
                     <div class="event-title">
-                        <p><?php echo htmlspecialchars($event->post_title); ?></p>
+                        <p><?php echo $event->post_title; ?></p>
                     </div>
-                    <div class="timeline-dialog-message" data-timeline-title="<?php echo htmlspecialchars($event->post_title); ?>">
-                        <?php echo $event->post_content; ?>
+                    <div class="timeline-dialog-message" data-timeline-title="<?php echo $event->post_title; ?>">
+                        <?php echo apply_filters('the_content', $event->post_content); ?>
                         <div class="date"><?php echo $event->post_date; ?></div>
                     </div>
                 <?php

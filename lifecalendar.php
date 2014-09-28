@@ -1,12 +1,17 @@
 <?php
 /**
  * Plugin Name: Life Calendar
- * Plugin URI: http://shawnnolan.com/plugins/life-calendar
+ * Plugin URI: http://wellrootedmedia.com/plugins/life-calendar
  * Description: A simple plugin for your life.
  * Version: 1.4
- * Author: Shawn Nolan
- * Author URI: http://shawnnolan.com
+ * Author: Well Rooted Media
+ * Author URI: http://wellrootedmedia.com
  * License: GPL2
+ */
+/*
+ * Todo:
+ * - Finish readme.txt file
+ * - Add recurring events
  */
 include( plugin_dir_path( __FILE__ ) . 'connect-class.php');
 include( plugin_dir_path( __FILE__ ) . 'calendar-class.php');
