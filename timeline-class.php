@@ -1,5 +1,5 @@
 <?php
-class Timeline extends Connect{
+class Timeline extends Connect {
     public $dates = array();
     public $colors = array();
 }
@@ -8,12 +8,7 @@ function displayTimelineClass() {
     $timeLine = new Timeline();
 
     $timeLine->setColumnName("posts");
-    $query = "
-            SELECT * FROM ".$timeLine->getPostPrefix()."
-            WHERE post_type = 'life_calendar_events'
-            AND post_status <> 'auto-draft'
-            ORDER BY post_date ASC
-        ";
+    $query = "SELECT * FROM ".$timeLine->getPostPrefix()." WHERE post_type = 'life_calendar_events' AND post_status <> 'auto-draft' ORDER BY post_date ASC";
     $timeLinePosts = $timeLine->wpdb()->get_results($query, OBJECT);
     $dates = $timeLine->dates;
 

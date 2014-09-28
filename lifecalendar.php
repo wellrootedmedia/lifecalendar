@@ -41,11 +41,6 @@ function pluginScripts() {
 
 add_shortcode( 'life_calendar', 'life_calendar_func' );
 function life_calendar_func( $atts ) {
-//    extract(shortcode_atts(array(
-//        'defaultMonth' => "",
-//        'defaultYear' => ""
-//    ), $atts));
-
     displayCalendarClass();
     $lceOption = get_option('timeline_option');
     if($lceOption == "on")

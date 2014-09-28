@@ -1,9 +1,11 @@
 <?php
 class Calendar extends Connect {
 
-    public $firstDay;
-    public $date;
     public $blank;
+    public $day;
+    public $month;
+    public $nextMonth;
+    public $year;
     private $_extraData = array();
 
     public function __get($proertyName) {
@@ -18,59 +20,102 @@ class Calendar extends Connect {
         $this->_extraData[$propertyName] = $propertyValue;
     }
 
-    public function getPosts() {
-        return $this->getData();
+    public function setDay($day) {
+        $this->day = $day;
     }
 
-    public function day() {
-        return (isset($_GET['myDay']) != ""
-            ? date('d', strtotime($_GET['myDay']))
-            : date('d', $this->date));
+    public function getDay() {
+        return $this->day;
     }
 
-    public function month() {
-        return (isset($_GET['myMonth']) != ""
-            ? date('m', strtotime($_GET['myMonth']))
-            : date('m', $this->date));
+    public function setMonth($month) {
+        $this->month = $month;
     }
 
-    public function year() {
-        return (isset($_GET['myYear']) != ""
-            ? date('Y', strtotime($_GET['myYear']."-".$this->month()."-".$this->day()))
-            : date('Y', $this->date));
+    public function getMonth() {
+        return $this->month;
     }
 
-    public function dayOfWeek() {
-        return date('D', $this->firstDay);
+    public function setYear($year) {
+        $this->year = $year;
     }
 
-    public function calTitle() {
-        return date('F', $this->firstDay);
+    public function getYear() {
+        return $this->year;
     }
+
+    public function getNextMonth() {
+        return date('F', strtotime('first day of next month', strtotime($this->year."-".$this->month)));
+    }
+
+    public function getPrevMonth() {
+        return date('F', strtotime('first day of previous month', strtotime($this->year."-".$this->month)));
+    }
+
+    public function getPrevYear() {
+        return date('Y', strtotime('last day of -1 year', strtotime($this->year."-".$this->month)));
+    }
+
+    public function getNextYear() {
+        return date('Y', strtotime('last day of +1 year', strtotime($this->year."-".$this->month)));
+    }
+
 }
 
 function displayCalendarClass () {
 
     $cal = new Calendar();
 
-    $cal->date = time();
-    $day = $cal->day();
-    $month = $cal->month();
-    $year = $cal->year();
-    $cal->firstDay = mktime(0, 0, 0, $month, 1, $year);
-    $title = $cal->calTitle();
-    $dayOfWeek = $cal->dayOfWeek();
-    $daysInMonth = cal_days_in_month(0, $month, $year);
+    /*
+     * Day class related
+     */
+    $currentDay = (isset($_GET['myDay']) != "" ? date('d', strtotime($_GET['myDay'])) : date('d'));
+    $cal->setDay($currentDay);
+    $getDay = $cal->getDay();
+
+    /*
+     * Month class related
+     * todo: check if "myMonth" is int, if it is convert it to
+     */
+    $currentMonth = (isset($_GET['myMonth']) != "" ? date('m', strtotime($_GET['myMonth'])) : date('m'));
+    $cal->setMonth($currentMonth);
+    $cal->getMonth();
+    $cal->month = $cal->getMonth();
+    $getMonth = $cal->getMonth();
+
+    /*
+     * Year class related
+     */
+    $currentYear = (isset($_GET['myYear']) != "" ? date('Y', strtotime($_GET['myYear']."-".$cal->month)) : date('Y'));
+    $cal->setYear($currentYear);
+    $getYear = $cal->getYear();
+    $getNextYear = $cal->getNextYear($currentYear, $currentMonth);
+
+    /*
+     * Extra data related
+     */
+    $cal->firstDay = mktime(0, 0, 0, $getMonth, 1, $getYear);
+    $title = $cal->calTitle = date('F', $cal->firstDay);
+    $dayOfWeek = $cal->dayOfTheWeek = date('D', $cal->firstDay);
+    $daysInMonth = cal_days_in_month(0, $getMonth, $getYear);
     $dayCount = $cal->dayCount = 1;
     $dayNum = $cal->dayNum = 1;
-    $prevMonth = date('F', strtotime(date('Y-m') . " -1 month"));
 
+    /*
+     * Pagination
+     */
+    $getNextMonth = $cal->getNextMonth();
+    $getPrevMonth = $cal->getPrevMonth();
+    $getPrevYear = $cal->getPrevYear();
+    $getNextYear = $cal->getNextYear();
+    $getYearMonth = date('F', strtotime($cal->year."-".$cal->month));
+
+
+    /*
+     * Get posts
+     */
     $cal->setColumnName("posts");
-    $query = "
-            SELECT * FROM ".$cal->getPostPrefix()."
-            WHERE post_type = 'life_calendar_events'
-            AND post_status <> 'auto-draft'
-        ";
+    $query = " SELECT * FROM ".$cal->getPostPrefix()." WHERE post_type = 'life_calendar_events' AND post_status <> 'auto-draft'";
     $posts = $cal->wpdb()->get_results($query, OBJECT);
 
     switch ($dayOfWeek) {
@@ -103,10 +148,8 @@ function displayCalendarClass () {
             break;
     }
 
-    //echo "<p>" . $cal->getPosts() . "</p>";
-
     echo "<table class=\"table table-striped\">";
-    echo "<tr><th colspan=7> " . $title . " " . $year . " </th></tr>";
+    echo "<tr><th colspan=7> " . $title . " " . $getYear . " </th></tr>";
     echo "<tr><td width=42>S</td><td width=42>M</td><td width=42>T</td><td width=42>W</td><td width=42>T</td><td width=42>F</td><td width=42>S</td></tr>";
     echo "<tr>";
 
@@ -128,12 +171,12 @@ function displayCalendarClass () {
     }
 
     while ($dayNum <= $daysInMonth) {
-        $today = ($dayNum == $day && $year == date('Y') && $month == date('m') ? "today" : "");
+        $today = ($dayNum == $getDay && $getYear == date('Y') && $getMonth == date('m') ? "today" : "");
         foreach($results as $result) {
             $postDay = date('j', strtotime($result['postDate']));
             $postMonth = date('m', strtotime($result['postDate']));
             $postYear = date('Y', strtotime($result['postDate']));
-            if($dayNum == $postDay && $month == $postMonth && $year == $postYear) {
+            if($dayNum == $postDay && $getMonth == $postMonth && $getYear == $postYear) {
                 ?>
                 <td class="cal-day day-<?php echo $dayNum; ?> hover <?php echo $today; ?>" data-calendar-event="<?php echo $result['postDate']; ?>">
                     <?php echo $dayNum; ?>
@@ -166,13 +209,21 @@ function displayCalendarClass () {
     }
 
     echo "</tr></table>";
-
-    echo '<a href="'.get_permalink().'">Today</a>';
-
-    echo '<br/>';
-
-    echo '<a href="'.add_query_arg( 'myMonth', strtolower($prevMonth), get_permalink(5276) ).'">'.$prevMonth.'</a>';
 ?>
+    <div class="row">
+        <div class="center-block" style="max-width: 377px; margin: 0 auto;">
+            <a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getYearMonth); ?>&myYear=<?php echo $getPrevYear; ?>">&lt;&lt;</a>
+
+            <a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getPrevMonth); ?>">&lt;</a>
+            &nbsp;
+            <a href="<?php echo get_permalink(); ?>">Today</a>
+            &nbsp;
+            <a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getNextMonth); ?>">&gt;</a>
+
+            <a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getYearMonth); ?>&myYear=<?php echo $getNextYear; ?>">&gt;&gt;</a>
+        </div>
+    </div>
+     &nbsp;
 
 <script type="text/javascript">
     $(function () {
