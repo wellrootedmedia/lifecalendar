@@ -12,7 +12,21 @@
  * Todo:
  * - Finish readme.txt file
  * - Add recurring events
+ * - Add wp version check, if < 2.9 wp_die()
  */
+
+register_activation_hook(__FILE__, 'lc_install');
+
+function lc_install() {
+    global $wp_version;
+    if(version_compare($wp_version, "2.9", "<")) {
+        deactivate_plugins(basename(__FILE__));
+        wp_die("This plugin requires WordPress version 2.9 or higher.");
+    }
+}
+
+
+
 include( plugin_dir_path( __FILE__ ) . 'connect-class.php');
 include( plugin_dir_path( __FILE__ ) . 'calendar-class.php');
 include( plugin_dir_path( __FILE__ ) . 'timeline-class.php');
