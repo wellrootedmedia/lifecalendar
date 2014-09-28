@@ -1,9 +1,11 @@
-td {
+.col-md-6 {
     text-align: center;
 }
 
-.col-md-6 {
+td, td.cal-day {
     text-align: center;
+    width: 60px;
+    height: 68px;
 }
 
 td.cal-day.hover {

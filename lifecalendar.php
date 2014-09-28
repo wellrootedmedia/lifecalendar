@@ -32,11 +32,10 @@ add_action( 'wp_enqueue_scripts', 'pluginScripts' );
 function pluginScripts() {
     wp_enqueue_style( 'jquery-ui-smoothness', "//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" );
     wp_enqueue_style( 'custom-plugin-style', plugins_url( 'custom.css' , __FILE__ ) );
+    wp_enqueue_style( 'timeline-style', plugins_url( 'css/style.css' , __FILE__ ) );
+
     wp_enqueue_script( 'my-jquury-script', "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" );
     wp_enqueue_script('my-jquery-ui-script', 'http://code.jquery.com/ui/1.11.1/jquery-ui.js');
-
-    wp_enqueue_style( 'timeline-style', plugins_url( 'css/style.css' , __FILE__ ) );
-    wp_enqueue_script('timeline-script', plugins_url( 'js/script.js' , __FILE__ ));
     wp_enqueue_script('timeline-ui-script', '//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js');
 }
 
@@ -53,6 +52,10 @@ function life_calendar_func( $atts ) {
         displayTimelineClass();
 }
 
+add_shortcode('life_timeline', 'life_timeline_func');
+function life_timeline_func() {
+    displayTimelineClass();
+}
 
 
 

@@ -191,23 +191,6 @@ function displayCalendarClass () {
                         width: 500,
                         height: 400
                     });
-
-                    $(document).scroll(function (e) {
-
-                        if ($(".ui-widget-overlay")) {
-                            $(".ui-widget-overlay").css({
-                                position: 'fixed',
-                                top: '0'
-                            });
-
-                            pos = $(".ui-dialog").position();
-
-                            $(".ui-dialog").css({
-                                position: 'fixed',
-                                top: pos.y
-                            });
-                        }
-                    });
                 }
             });
 
