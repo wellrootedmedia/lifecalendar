@@ -36,7 +36,7 @@ function create_post_type() {
     register_post_type( 'life_calendar_events',
         array(
             'labels' => array(
-                'name' => __( 'Events' ),
+                'name' => __( 'Life Calendar Events' ),
                 'singular_name' => __( 'Event' )
             ),
             'public' => true,

@@ -115,7 +115,7 @@ function displayCalendarClass () {
      * Get posts
      */
     $cal->setColumnName("posts");
-    $query = " SELECT * FROM ".$cal->getPostPrefix()." WHERE post_type = 'life_calendar_events' AND post_status <> 'auto-draft'";
+    $query = " SELECT * FROM ".$cal->getPostPrefix()." WHERE post_type = 'life_calendar_events' AND post_status <> 'auto-draft' AND post_status <> 'trash'";
     $posts = $cal->wpdb()->get_results($query, OBJECT);
 
     switch ($dayOfWeek) {
