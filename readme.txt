@@ -40,3 +40,6 @@ screenshot-1.png
 
 = 1.4 =
 * First commit.
+
+= 1.5 =
+* Added functionality to calendar day in month to accept more than one event.
