@@ -1,5 +1,7 @@
 <?php
-class Calendar extends Connect {
+
+class Calendar extends Connect
+{
 
     public $blank;
     public $day;
@@ -9,61 +11,74 @@ class Calendar extends Connect {
     public $dates = array();
     private $_extraData = array();
 
-    public function __get($proertyName) {
-        if(array_key_exists($proertyName, $this->_extraData)) {
+    public function __get($proertyName)
+    {
+        if (array_key_exists($proertyName, $this->_extraData)) {
             return $this->_extraData[$proertyName];
         } else {
             return null;
         }
     }
 
-    public function __set($propertyName, $propertyValue) {
+    public function __set($propertyName, $propertyValue)
+    {
         $this->_extraData[$propertyName] = $propertyValue;
     }
 
-    public function setDay($day) {
+    public function setDay($day)
+    {
         $this->day = $day;
     }
 
-    public function getDay() {
+    public function getDay()
+    {
         return $this->day;
     }
 
-    public function setMonth($month) {
+    public function setMonth($month)
+    {
         $this->month = $month;
     }
 
-    public function getMonth() {
+    public function getMonth()
+    {
         return $this->month;
     }
 
-    public function setYear($year) {
+    public function setYear($year)
+    {
         $this->year = $year;
     }
 
-    public function getYear() {
+    public function getYear()
+    {
         return $this->year;
     }
 
-    public function getNextMonth() {
-        return date('F', strtotime('first day of next month', strtotime($this->year."-".$this->month)));
+    public function getNextMonth()
+    {
+        return date('F', strtotime('first day of next month', strtotime($this->year . "-" . $this->month)));
     }
 
-    public function getPrevMonth() {
-        return date('F', strtotime('first day of previous month', strtotime($this->year."-".$this->month)));
+    public function getPrevMonth()
+    {
+        return date('F', strtotime('first day of previous month', strtotime($this->year . "-" . $this->month)));
     }
 
-    public function getPrevYear() {
-        return date('Y', strtotime('last day of -1 year', strtotime($this->year."-".$this->month)));
+    public function getPrevYear()
+    {
+        return date('Y', strtotime('last day of -1 year', strtotime($this->year . "-" . $this->month)));
     }
 
-    public function getNextYear() {
-        return date('Y', strtotime('last day of +1 year', strtotime($this->year."-".$this->month)));
+    public function getNextYear()
+    {
+        return date('Y', strtotime('last day of +1 year', strtotime($this->year . "-" . $this->month)));
     }
 
 }
 
-function displayCalendarClass () {
+function displayCalendarClass()
+{
 
     $cal = new Calendar();
 
@@ -87,7 +102,7 @@ function displayCalendarClass () {
     /*
      * Year class related
      */
-    $currentYear = (isset($_GET['myYear']) != "" ? date('Y', strtotime($_GET['myYear']."-".$cal->month)) : date('Y'));
+    $currentYear = (isset($_GET['myYear']) != "" ? date('Y', strtotime($_GET['myYear'] . "-" . $cal->month)) : date('Y'));
     $cal->setYear($currentYear);
     $getYear = $cal->getYear();
     $getNextYear = $cal->getNextYear($currentYear, $currentMonth);
@@ -110,14 +125,14 @@ function displayCalendarClass () {
     $getPrevMonth = $cal->getPrevMonth();
     $getPrevYear = $cal->getPrevYear();
     $getNextYear = $cal->getNextYear();
-    $getYearMonth = date('F', strtotime($cal->year."-".$cal->month));
+    $getYearMonth = date('F', strtotime($cal->year . "-" . $cal->month));
     $ifYearExists = (isset($_GET['myYear']) ? "&myYear=" . $_GET['myYear'] : "");
 
     /*
      * Get posts
      */
     $cal->setColumnName("posts");
-    $query = " SELECT * FROM ".$cal->getPostPrefix()." WHERE post_type = 'life_calendar_events' AND post_status <> 'auto-draft' AND post_status <> 'trash'";
+    $query = " SELECT * FROM " . $cal->getPostPrefix() . " WHERE post_type = 'life_calendar_events' AND post_status <> 'auto-draft' AND post_status <> 'trash'";
     $posts = $cal->wpdb()->get_results($query, OBJECT);
 
     switch ($dayOfWeek) {
@@ -151,115 +166,155 @@ function displayCalendarClass () {
     }
     ?>
     <table class="table">
-    <tr><th colspan=7><?php echo $title; ?> <?php echo $getYear; ?></th></tr>
-    <tr>
-        <td class="row-day"><div class="dark-gray">Sun</div></td>
-        <td class="row-day"><div class="dark-gray">Mon</div></td>
-        <td class="row-day"><div class="dark-gray">Tue</div></td>
-        <td class="row-day"><div class="dark-gray">Wed</div></td>
-        <td class="row-day"><div class="dark-gray">Thur</div></td>
-        <td class="row-day"><div class="dark-gray">Fri</div></td>
-        <td class="row-day"><div class="dark-gray">Sat</div></td>
-    </tr>
-    <tr>
-    <?php
-    while ($cal->blank > 0) {
-        ?>
-        <td class="empty-cell"></td>
-        <?php
-        $cal->blank = $cal->blank - 1;
-        $dayCount++;
-    }
+        <tr>
+            <th colspan=7><?php echo $title; ?> <?php echo $getYear; ?></th>
+        </tr>
+        <tr>
+            <td class="row-day">
+                <div class="dark-gray">Sun</div>
+            </td>
+            <td class="row-day">
+                <div class="dark-gray">Mon</div>
+            </td>
+            <td class="row-day">
+                <div class="dark-gray">Tue</div>
+            </td>
+            <td class="row-day">
+                <div class="dark-gray">Wed</div>
+            </td>
+            <td class="row-day">
+                <div class="dark-gray">Thur</div>
+            </td>
+            <td class="row-day">
+                <div class="dark-gray">Fri</div>
+            </td>
+            <td class="row-day">
+                <div class="dark-gray">Sat</div>
+            </td>
+        </tr>
+        <tr>
+            <?php
+            while ($cal->blank > 0) {
+                ?>
+                <td class="empty-cell"></td>
+                <?php
+                $cal->blank = $cal->blank - 1;
+                $dayCount++;
+            }
 
-    if(!empty($posts)) {
-        foreach($posts as $post ) {
-            $dates[date('Y',strtotime($post->post_date))][] = $post;
-        }
-    }
+            if (!empty($posts)) {
+                foreach ($posts as $post) {
+                    $dates[date('Y', strtotime($post->post_date))][] = $post;
+                }
+            }
 
-    foreach ($dates as $year => $array) {
-        while ($dayNum <= $daysInMonth) {
-            $today = ($dayNum == $getDay && $getYear == date('Y') && $getMonth == date('m') ? "today" : "");
-            ?>
-            <td class="cal-day day-<?php echo $dayNum; ?> <?php echo $today; ?>">
-                <div class="event-cell-wrapper">
-                    <div class="event-cell-date">
-                        <?php echo $dayNum; ?>
-                    </div>
-                    <?php
-                    foreach($array as $event) {
+            if (!empty($dates)) {
+                foreach ($dates as $array) {
+                    while ($dayNum <= $daysInMonth) {
                         $today = ($dayNum == $getDay && $getYear == date('Y') && $getMonth == date('m') ? "today" : "");
-                        $postDay = date('j', strtotime($event->post_date));
-                        $postMonth = date('m', strtotime($event->post_date));
-                        $postYear = date('Y', strtotime($event->post_date));
-                        if($dayNum == $postDay && $getMonth == $postMonth && $getYear == $postYear) {
-                            ?>
-                            <div class="event-cell-content">
-                                <a class="event" href="">
-                                    <?php echo substr($event->post_title,0,10).'...'; ?>
-                                </a>
-                                <div class="calendar-dialog-message" data-calendar-event="<?php echo $event->post_date; ?>" data-calendar-title="<?php echo $event->post_title; ?>">
-                                    <?php echo $event->post_content; ?>
+                        ?>
+                        <td class="cal-day day-<?php echo $dayNum; ?> <?php echo $today; ?>">
+                            <div class="event-cell-wrapper">
+                                <div class="event-cell-date">
+                                    <?php echo $dayNum; ?>
+                                </div>
+                                <?php
+                                foreach ($array as $event) {
+                                $postDay = date('j', strtotime($event->post_date));
+                                $postMonth = date('m', strtotime($event->post_date));
+                                $postYear = date('Y', strtotime($event->post_date));
+                                if ($dayNum == $postDay && $getMonth == $postMonth && $getYear == $postYear) {
+                                ?>
+                                <div class="event-cell-content">
+                                    <a class="event" href="">
+                                        <?php echo substr($event->post_title, 0, 10) . '...'; ?>
+                                    </a>
+
+                                    <div class="calendar-dialog-message" data-calendar-event="<?php echo $event->post_date; ?>"
+                                         data-calendar-title="<?php echo $event->post_title; ?>">
+                                        <?php echo $event->post_content; ?>
+                                    </div>
                                 </div>
                             </div>
+                            <?php
+                            }
+                            ?>
                             </div>
+                            <?php
+                            }
+                            ?>
+                            </div>
+                        </td>
                         <?php
+                        $dayNum++;
+                        $dayCount++;
+                        if ($dayCount > 7) {
+                        ?>
+                            </tr>
+                            <tr>
+                        <?php
+                        $dayCount = 1;
                         }
-                    ?>
-                </div>
-                <?php
+                    }
                 }
-                ?>
-                </div>
-            </td>
-            <?php
-            $dayNum++;
-            $dayCount++;
-            if ($dayCount > 7) {
-                ?>
-                </tr><tr>
-                <?php
-                $dayCount = 1;
+            } else {
+                while($dayNum <= $daysInMonth) {
+                    $today = ($dayNum == $getDay && $getYear == date('Y') && $getMonth == date('m') ? "today" : "");
+                    ?>
+                        <td class="cal-day day-<?php echo $dayNum; ?> <?php echo $today; ?>">
+                            <div class="event-cell-wrapper">
+                                <div class="event-cell-date">
+                                    <?php echo $dayNum; ?>
+                                </div>
+                            </div>
+                        </td>
+                    <?php
+                }
             }
-        }
-    }
 
-    while ($dayCount > 1 && $dayCount <= 7) {
-        ?>
-        <td class="empty-cell"></td>
-        <?php
-        $dayCount++;
-    }
-    ?>
-    </tr></table>
+            while ($dayCount > 1 && $dayCount <= 7) {
+                ?>
+                <td class="empty-cell"></td>
+                <?php
+                $dayCount++;
+            }
+            ?>
+        </tr>
+    </table>
 
     <ul class="pagination">
-        <li><a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getYearMonth); ?>&myYear=<?php echo $getPrevYear; ?>">&lt;&lt;</a></li>
-        <li><a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getPrevMonth) . $ifYearExists; ?>">&lt;</a></li>
+        <li>
+            <a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getYearMonth); ?>&myYear=<?php echo $getPrevYear; ?>">
+                &lt;&lt;</a></li>
+        <li><a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getPrevMonth) . $ifYearExists; ?>">
+                &lt;</a></li>
         <li><a href="<?php echo get_permalink(); ?>">Today</a></li>
-        <li><a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getNextMonth) . $ifYearExists; ?>">&gt;</a></li>
-        <li><a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getYearMonth); ?>&myYear=<?php echo $getNextYear; ?>">&gt;&gt;</a></li>
+        <li><a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getNextMonth) . $ifYearExists; ?>">
+                &gt;</a></li>
+        <li>
+            <a href="<?php get_permalink(); ?>?myMonth=<?php echo strtolower($getYearMonth); ?>&myYear=<?php echo $getNextYear; ?>">
+                &gt;&gt;</a></li>
     </ul>
 
     <script type="text/javascript">
-    $(function () {
-        $('.event-cell-content .event').each(function() {
-            $.data(this, 'dialog',
-                $(this).next('.calendar-dialog-message').dialog({
-                    autoOpen: false,
-                    modal: true,
-                    title: $(this).data('calendarTitle'),
-                    maxWidth: 600,
-                    height: 'auto',
-                    draggable: false
-                })
-            );
-        }).click(function() {
-            console.log("here");
-            $.data(this, 'dialog').dialog('open');
-            return false;
+        $(function () {
+            $('.event-cell-content .event').each(function () {
+                $.data(this, 'dialog',
+                    $(this).next('.calendar-dialog-message').dialog({
+                        autoOpen: false,
+                        modal: true,
+                        title: $(this).data('calendarTitle'),
+                        maxWidth: 600,
+                        height: 'auto',
+                        draggable: false
+                    })
+                );
+            }).click(function () {
+                console.log("here");
+                $.data(this, 'dialog').dialog('open');
+                return false;
+            });
         });
-    });
     </script>
 <?php
 }
