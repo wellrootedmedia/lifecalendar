@@ -1,0 +1,65 @@
+.table {
+    border-bottom: 1px solid;
+}
+.table>tbody>tr>td {
+    padding: 0 !important;
+    border-right: 1px solid !important;
+    border-left: 1px solid !important;
+    border-top: 0 !important;
+    border-bottom: 1px solid;
+}
+
+.col-md-6 {
+    text-align: center;
+}
+
+td.cal-day {
+    text-align: center;
+    width: 60px;
+    height: 100px;
+}
+
+td.cal-day.hover {
+    cursor: pointer;
+}
+td.cal-day.hover:hover{
+    background-color: lightgrey !important;
+}
+
+.today { background-color: ivory; }
+
+.dialog-message {
+    width: 500px;
+}
+
+.event-cell-wrapper {
+    padding: 0;
+    margin: 0;
+}
+.event-cell-date {
+    text-align: left;
+    background: lightgray;
+    padding-left: 10px;
+    color: #FFFFFF;
+}
+
+.empty-cell {
+    background-color: whitesmoke;
+}
+
+.event-cell-date.empty-cell {
+    background-color: transparent;
+}
+.event-cell-content {
+    text-align: left;
+    padding-left: 7px;
+}
+.dark-gray {
+    background-color: darkgray;
+    color: #FFFFFF;
+}
+
+td.row-day {
+    height: auto;
+    text-align: center;
+}

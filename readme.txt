@@ -1,6 +1,6 @@
 === Plugin Name ===
 Contributors: wellrootedmedia
-Donate link: http://wellrootedmedia.com/donate/life-calendar-plugin
+Donate link: http://wellrootedmedia.com/donate/life-calendar
 Tags: calendar, post_type, post type
 Requires at least: 2.9
 Tested up to: 4.0
