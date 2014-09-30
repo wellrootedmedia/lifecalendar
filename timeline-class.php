@@ -27,18 +27,19 @@ function displayTimelineClass() {
             }
         }
 
-        foreach ($dates as $year=>$array) {
+        foreach ($dates as $year => $array) {
             ?>
             <div class="event col-md-3" id="<?php echo $year; ?>">
-                <div class="event-wrapper <?php echo $colors[$i++%3]; ?>"><?php echo $year; ?></div>
+                <div class="event-wrapper <?php echo $colors[$i++ % 3]; ?>"><?php echo $year; ?></div>
                 <?php
-                foreach($array as $event) {
+                foreach ($array as $event) {
                     ?>
                     <div class="event-title">
                         <p><?php echo $event->post_title; ?></p>
                     </div>
                     <div class="timeline-dialog-message" data-timeline-title="<?php echo $event->post_title; ?>">
-                        <div class="timeline-content"><?php echo apply_filters('the_content', $event->post_content); ?></div>
+                        <div
+                            class="timeline-content"><?php echo apply_filters('the_content', $event->post_content); ?></div>
                         <div class="clear"></div>
                         <div class="date"><?php echo $event->post_date; ?></div>
                     </div>

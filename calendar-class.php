@@ -209,76 +209,76 @@ function displayCalendarClass()
             }
 
             if (!empty($dates)) {
-                foreach ($dates as $array) {
-                    while ($dayNum <= $daysInMonth) {
-                        $today = ($dayNum == $getDay && $getYear == date('Y') && $getMonth == date('m') ? "today" : "");
-                        ?>
-                        <td class="cal-day day-<?php echo $dayNum; ?> <?php echo $today; ?>">
-                            <div class="event-cell-wrapper">
-                                <div class="event-cell-date">
-                                    <?php echo $dayNum; ?>
-                                </div>
-                                <?php
-                                foreach ($array as $event) {
-                                $postDay = date('j', strtotime($event->post_date));
-                                $postMonth = date('m', strtotime($event->post_date));
-                                $postYear = date('Y', strtotime($event->post_date));
-                                if ($dayNum == $postDay && $getMonth == $postMonth && $getYear == $postYear) {
-                                ?>
-                                <div class="event-cell-content">
-                                    <a class="event" href="">
-                                        <?php echo substr($event->post_title, 0, 10) . '...'; ?>
-                                    </a>
-
-                                    <div class="calendar-dialog-message" data-calendar-event="<?php echo $event->post_date; ?>"
-                                         data-calendar-title="<?php echo $event->post_title; ?>">
-                                        <?php echo $event->post_content; ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php
-                            }
-                            ?>
-                            </div>
-                            <?php
-                            }
-                            ?>
-                            </div>
-                        </td>
-                        <?php
-                        $dayNum++;
-                        $dayCount++;
-                        if ($dayCount > 7) {
-                        ?>
-                            </tr>
-                            <tr>
-                        <?php
-                        $dayCount = 1;
-                        }
-                    }
-                }
-            } else {
-                while($dayNum <= $daysInMonth) {
-                    $today = ($dayNum == $getDay && $getYear == date('Y') && $getMonth == date('m') ? "today" : "");
-                    ?>
-                        <td class="cal-day day-<?php echo $dayNum; ?> <?php echo $today; ?>">
-                            <div class="event-cell-wrapper">
-                                <div class="event-cell-date">
-                                    <?php echo $dayNum; ?>
-                                </div>
-                            </div>
-                        </td>
+            foreach ($dates as $array) {
+            while ($dayNum <= $daysInMonth) {
+            $today = ($dayNum == $getDay && $getYear == date('Y') && $getMonth == date('m') ? "today" : "");
+            ?>
+            <td class="cal-day day-<?php echo $dayNum; ?> <?php echo $today; ?>">
+                <div class="event-cell-wrapper">
+                    <div class="event-cell-date">
+                        <?php echo $dayNum; ?>
+                    </div>
                     <?php
-                    $dayNum++;
-                    $dayCount++;
-                    if ($dayCount > 7) {
+                    foreach ($array as $event) {
+                    $postDay = date('j', strtotime($event->post_date));
+                    $postMonth = date('m', strtotime($event->post_date));
+                    $postYear = date('Y', strtotime($event->post_date));
+                    if ($dayNum == $postDay && $getMonth == $postMonth && $getYear == $postYear) {
                     ?>
-                            </tr>
+                    <div class="event-cell-content">
+                        <a class="event" href="">
+                            <?php echo substr($event->post_title, 0, 10) . '...'; ?>
+                        </a>
+
+                        <div class="calendar-dialog-message" data-calendar-event="<?php echo $event->post_date; ?>"
+                             data-calendar-title="<?php echo $event->post_title; ?>">
+                            <?php echo $event->post_content; ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                }
+                ?>
+                </div>
+                <?php
+                }
+                ?>
+                </div>
+            </td>
+            <?php
+            $dayNum++;
+            $dayCount++;
+            if ($dayCount > 7) {
+            ?>
+        </tr>
         <tr>
             <?php
             $dayCount = 1;
             }
-                }
+            }
+            }
+            } else {
+            while ($dayNum <= $daysInMonth) {
+            $today = ($dayNum == $getDay && $getYear == date('Y') && $getMonth == date('m') ? "today" : "");
+            ?>
+            <td class="cal-day day-<?php echo $dayNum; ?> <?php echo $today; ?>">
+                <div class="event-cell-wrapper">
+                    <div class="event-cell-date">
+                        <?php echo $dayNum; ?>
+                    </div>
+                </div>
+            </td>
+            <?php
+            $dayNum++;
+            $dayCount++;
+            if ($dayCount > 7) {
+            ?>
+        </tr>
+        <tr>
+            <?php
+            $dayCount = 1;
+            }
+            }
             }
 
             while ($dayCount > 1 && $dayCount <= 7) {
