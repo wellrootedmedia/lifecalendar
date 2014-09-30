@@ -269,6 +269,15 @@ function displayCalendarClass()
                             </div>
                         </td>
                     <?php
+                    $dayNum++;
+                    $dayCount++;
+                    if ($dayCount > 7) {
+                    ?>
+                            </tr>
+        <tr>
+            <?php
+            $dayCount = 1;
+            }
                 }
             }
 
