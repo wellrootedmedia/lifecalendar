@@ -209,6 +209,7 @@ function displayCalendarClass()
             }
 
             if (!empty($dates)) {
+            //print_r($dates);
             foreach ($dates as $array) {
             while ($dayNum <= $daysInMonth) {
             $today = ($dayNum == $getDay && $getYear == date('Y') && $getMonth == date('m') ? "today" : "");
@@ -220,19 +221,22 @@ function displayCalendarClass()
                     </div>
                     <?php
                     foreach ($array as $event) {
+                    //print_r($array);
                     $postDay = date('j', strtotime($event->post_date));
                     $postMonth = date('m', strtotime($event->post_date));
                     $postYear = date('Y', strtotime($event->post_date));
+                    echo "day: " . $postDay;
+                    echo "month: " . $postMonth;
+                    echo "year: " . $postYear;
                     if ($dayNum == $postDay && $getMonth == $postMonth && $getYear == $postYear) {
                     ?>
                     <div class="event-cell-content">
-                        <a class="event" href="">
+                        <a class="event" href="" data-calendar-title="<?php echo $event->post_title; ?>">
                             <?php echo substr($event->post_title, 0, 10) . '...'; ?>
                         </a>
-
                         <div class="calendar-dialog-message" data-calendar-event="<?php echo $event->post_date; ?>"
                              data-calendar-title="<?php echo $event->post_title; ?>">
-                            <?php echo $event->post_content; ?>
+                            <?php echo apply_filters('the_content', $event->post_content); ?>
                         </div>
                     </div>
                 </div>
@@ -319,7 +323,6 @@ function displayCalendarClass()
                     })
                 );
             }).click(function () {
-                console.log("here");
                 $.data(this, 'dialog').dialog('open');
                 return false;
             });
