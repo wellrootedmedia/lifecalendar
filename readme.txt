@@ -40,3 +40,6 @@ screenshot-1.png
 
 = 1.4 =
 * First commit.
+
+= 1.5 =
+* Fixed bug for events not showing up on certain days in past & future years.
