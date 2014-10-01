@@ -38,8 +38,11 @@ screenshot-1.png
 
 == Changelog ==
 
-= 1.4 =
-* First commit.
+= 1.6 =
+* Added link in event dialog to event post.
 
 = 1.5 =
 * Fixed bug for events not showing up on certain days in past & future years.
+
+= 1.4 =
+* First commit.

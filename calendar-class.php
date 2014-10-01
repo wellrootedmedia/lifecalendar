@@ -230,7 +230,8 @@ function displayCalendarClass()
                                     </a>
                                     <div class="calendar-dialog-message"
                                          data-calendar-event="<?php echo $event->post_date; ?>">
-                                        <?php echo apply_filters("the_content", $event->post_content); ?>
+                                        <div><a href="<?php echo get_permalink($event->ID); ?>">View event</a></div>
+                                        <div><?php echo apply_filters("the_content", $event->post_content); ?></div>
                                     </div>
                                 </div>
                                 <?php

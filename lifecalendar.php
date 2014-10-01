@@ -3,7 +3,7 @@
  * Plugin Name: Life Calendar
  * Plugin URI: http://wellrootedmedia.com/plugins/life-calendar
  * Description: A simple plugin for your life.
- * Version: 1.5
+ * Version: 1.6
  * Author: Well Rooted Media
  * Author URI: http://wellrootedmedia.com
  * License: GPL2
