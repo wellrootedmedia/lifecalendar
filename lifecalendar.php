@@ -3,7 +3,7 @@
  * Plugin Name: Life Calendar
  * Plugin URI: http://wellrootedmedia.com/plugins/life-calendar
  * Description: A simple plugin for your life.
- * Version: 1.5
+ * Version: 1.4
  * Author: Well Rooted Media
  * Author URI: http://wellrootedmedia.com
  * License: GPL2
@@ -50,10 +50,8 @@ function create_post_type() {
 add_action( 'wp_enqueue_scripts', 'pluginScripts' );
 function pluginScripts() {
     wp_enqueue_style( 'jquery-ui-smoothness', "//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" );
-    wp_enqueue_style( 'bootstrap', plugins_url( 'css/bootstrap.css' , __FILE__ ) );
-    wp_enqueue_style( 'bootstrap-map', plugins_url( 'css/bootstrap.css.map' , __FILE__ ) );
-    wp_enqueue_style( 'custom-plugin-style', plugins_url( 'calendar.css' , __FILE__ ) );
-    wp_enqueue_style( 'timeline-style', plugins_url( 'timeline.css' , __FILE__ ) );
+    wp_enqueue_style( 'custom-plugin-style', plugins_url( 'custom.css' , __FILE__ ) );
+    wp_enqueue_style( 'timeline-style', plugins_url( 'css/style.css' , __FILE__ ) );
 
     wp_enqueue_script( 'my-jquury-script', "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" );
     wp_enqueue_script('my-jquery-ui-script', 'http://code.jquery.com/ui/1.11.1/jquery-ui.js');

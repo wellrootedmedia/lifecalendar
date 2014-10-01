@@ -1,6 +1,6 @@
 === Plugin Name ===
 Contributors: wellrootedmedia
-Donate link: http://wellrootedmedia.com/donate/life-calendar
+Donate link: http://wellrootedmedia.com/donate/life-calendar-plugin
 Tags: calendar, post_type, post type
 Requires at least: 2.9
 Tested up to: 4.0
@@ -40,6 +40,3 @@ screenshot-1.png
 
 = 1.4 =
 * First commit.
-
-= 1.5 =
-* Added functionality to calendar day in month to accept more than one event.

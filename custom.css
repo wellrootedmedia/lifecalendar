@@ -1,0 +1,22 @@
+.col-md-6 {
+    text-align: center;
+}
+
+td, td.cal-day {
+    text-align: center;
+    width: 60px;
+    height: 68px;
+}
+
+td.cal-day.hover {
+    cursor: pointer;
+}
+td.cal-day.hover:hover{
+    background-color: lightgrey !important;
+}
+
+.today { background-color: lightgreen; }
+
+.dialog-message {
+    width: 500px;
+}
