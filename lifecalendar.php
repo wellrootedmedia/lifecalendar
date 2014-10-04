@@ -48,6 +48,7 @@ function create_post_type() {
 add_action( 'wp_enqueue_scripts', 'pluginScripts' );
 function pluginScripts() {
     wp_enqueue_style( 'jquery-ui-smoothness', "//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" );
+    wp_enqueue_style( 'bootstrap-style', plugins_url( 'css/bootstrap.css' , __FILE__ ) );
     wp_enqueue_style( 'calendar-style', plugins_url( 'calendar.css' , __FILE__ ) );
     wp_enqueue_style( 'timeline-style', plugins_url( 'timeline.css' , __FILE__ ) );
 
