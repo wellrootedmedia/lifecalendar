@@ -53,15 +53,14 @@ function displayTimelineClass() {
 </div>
 
     <script type="text/javascript">
-        $(function () {
+        (function ($) {
             $('.event.col-md-3 .event-title').each(function() {
-                console.log($(this).text());
                 $.data(this, 'dialog',
                     $(this).next('.timeline-dialog-message').dialog({
                         autoOpen: false,
                         modal: true,
                         title: $(this).text(),
-                        maxWidth: 600,
+                        width: 600,
                         height: 'auto',
                         draggable: false
                     })
@@ -70,7 +69,7 @@ function displayTimelineClass() {
                 $.data(this, 'dialog').dialog('open');
                 return false;
             });
-        });
+        }(jQuery));
     </script>
 
 <?php } ?>

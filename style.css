@@ -72,6 +72,75 @@ td.row-day {
     text-align: center;
 }
 
+
+
+
+
+
+
+/* timeline styles */
+
+.timeline.row .event-wrapper {
+    font-size: 19px;
+    padding: 10px;
+}
+
+.event-title {
+    background: #F4F4F4;
+    border: 1px solid #EEEEEE;
+    list-style: none;
+    margin: 5px;
+    padding: 4px 7px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.event-title:hover {
+    cursor:pointer;
+    background:#E6F8FF;
+    border:1px solid #D4E6EE;
+    color:#548DA5;
+}
+
+.event-wrapper.chreme{
+    background:#FBF7F0;
+    border:1px solid #EEE4D4;
+    color:#A78B5F;
+}
+
+.event-wrapper.blue{
+    background:#E6F8FF;
+    border:1px solid #D4E6EE;
+    color:#548DA5;
+}
+
+.event-wrapper.green{
+    background:#E6FFDF none repeat scroll 0 0;
+    border:1px solid #C9E6C1;
+    color:#6EA85F;
+}
+
+.timeline-dialog-message .date {
+    bottom: 20px;
+    color: #999999;
+    font-size: 0.8em;
+    font-style: italic;
+    position: absolute;
+    right: 15px;
+    padding: 2px;
+    background: #FCFCFC;
+}
+
+.ui-widget-header {
+    border: 0;
+    background: none;
+    border-bottom: 1px solid;
+    border-radius: 0;
+}
+
+
+/* media queries */
 @media (max-width: 600px) {
     .ui-dialog {
         width: 100% !important;
