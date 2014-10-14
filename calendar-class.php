@@ -273,7 +273,7 @@ function displayCalendarClass()
     </ul>
 
     <script type="text/javascript">
-        (function ($) {
+        jQuery(function($) {
             $('.event-cell-content .event').each(function() {
                 $.data(this, 'dialog',
                     $(this).next('.calendar-dialog-message').dialog({
@@ -289,7 +289,7 @@ function displayCalendarClass()
                 $.data(this, 'dialog').dialog('open');
                 return false;
             });
-        }(jQuery));
+        });
     </script>
 <?php
 }

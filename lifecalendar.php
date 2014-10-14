@@ -51,7 +51,11 @@ function pluginScripts() {
     wp_enqueue_style( 'bootstrap-style', plugins_url( 'css/bootstrap.css' , __FILE__ ) );
     wp_enqueue_style( 'calendar-style', plugins_url( 'style.css' , __FILE__ ) );
 
-    wp_enqueue_script('life-calendar-jquery', 'http://code.jquery.com/ui/1.11.1/jquery-ui.js');
+    wp_register_script( 'my-jquery-script', 'http://code.jquery.com/jquery-1.10.2.js' );
+    wp_register_script( 'my-ui-script', 'http://code.jquery.com/ui/1.11.1/jquery-ui.js' );
+
+    wp_enqueue_script('my-jquery-script');
+    wp_enqueue_script('my-script');
 }
 
 add_shortcode( 'life_calendar', 'life_calendar_func' );

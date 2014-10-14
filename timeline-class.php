@@ -53,7 +53,7 @@ function displayTimelineClass() {
 </div>
 
     <script type="text/javascript">
-        (function ($) {
+        jQuery(function($) {
             $('.event.col-md-3 .event-title').each(function() {
                 $.data(this, 'dialog',
                     $(this).next('.timeline-dialog-message').dialog({
@@ -69,7 +69,7 @@ function displayTimelineClass() {
                 $.data(this, 'dialog').dialog('open');
                 return false;
             });
-        }(jQuery));
+        });
     </script>
 
 <?php } ?>
